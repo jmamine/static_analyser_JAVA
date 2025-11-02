@@ -75,7 +75,7 @@ Cette approche permet de séparer la structure des données (l'AST) des opérati
 
 ```bash
 # Cloner le projet
-git clone https://github.com/jmamine/static_analyser.git
+git clone https://github.com/jmamine/static_analyser_JAVA.git
 cd static_analyser
 
 # Compiler le projet
