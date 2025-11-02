@@ -55,7 +55,7 @@ Cet analyseur statique permet de :
 
 ```bash
 # Cloner le projet
-git clone [URL_DU_PROJET]
+git clone https://github.com/jmamine/static_analyser.git
 cd static_analyser
 
 # Compiler le projet
