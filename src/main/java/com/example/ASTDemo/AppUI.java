@@ -547,24 +547,6 @@ public class AppUI extends Application {
                 .append(" (").append(c.getMethodCount()).append(" méthodes, ")
                 .append(c.getAttributeCount()).append(" attributs)\n"));
 
-        // Question 11: valeur X
-        TextInputDialog dialog = new TextInputDialog("3");
-        dialog.setTitle("Analyse avancée");
-        dialog.setHeaderText("Classes avec un nombre spécifique de méthodes");
-        dialog.setContentText("Entrez le nombre minimum de méthodes :");
-        dialog.showAndWait().ifPresent(xStr -> {
-            try {
-                int x = Integer.parseInt(xStr);
-                List<ClassInfo> classesWithMoreThanX = calculator.getClassesWithMoreThanXMethods(x);
-                sb.append("\n=== Classes avec plus de ").append(x).append(" méthodes ===\n");
-                if (classesWithMoreThanX.isEmpty()) sb.append("Aucune classe trouvée.\n");
-                else classesWithMoreThanX.forEach(c -> sb.append(" - ").append(c.getFullName())
-                        .append(" (").append(c.getMethodCount()).append(" méthodes)\n"));
-            } catch (NumberFormatException ex) {
-                sb.append("\nValeur invalide.\n");
-            }
-        });
-
         // Question 12: top 10% méthodes par lignes
         sb.append("\n12. Les 10% des méthodes avec le plus de lignes par classe:\n");
         Map<String, List<MethodInfo>> topMethodsPerClass = calculator.getTop10PercentMethodsByLinesPerClass();
@@ -591,6 +573,29 @@ public class AppUI extends Application {
         Scene scene = new Scene(root, 800, 600);
         resultsStage.setScene(scene);
         resultsStage.show();
+        
+        // Question 11: valeur X - poser la question après avoir affiché la fenêtre
+        TextInputDialog dialog = new TextInputDialog("3");
+        dialog.setTitle("Analyse avancée");
+        dialog.setHeaderText("Classes avec un nombre spécifique de méthodes");
+        dialog.setContentText("Entrez le nombre minimum de méthodes :");
+        dialog.showAndWait().ifPresent(xStr -> {
+            try {
+                int x = Integer.parseInt(xStr);
+                List<ClassInfo> classesWithMoreThanX = calculator.getClassesWithMoreThanXMethods(x);
+                StringBuilder question11 = new StringBuilder();
+                question11.append("\n=== Question 11 : Classes avec plus de ").append(x).append(" méthodes ===\n");
+                if (classesWithMoreThanX.isEmpty()) {
+                    question11.append("Aucune classe trouvée.\n");
+                } else {
+                    classesWithMoreThanX.forEach(c -> question11.append(" - ").append(c.getFullName())
+                            .append(" (").append(c.getMethodCount()).append(" méthodes)\n"));
+                }
+                textArea.appendText(question11.toString());
+            } catch (NumberFormatException ex) {
+                textArea.appendText("\nValeur invalide.\n");
+            }
+        });
     }
 
     public static void main(String[] args) {
